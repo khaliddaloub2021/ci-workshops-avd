@@ -1,6 +1,7 @@
 aaa_root:
   disabled: true
 config_end: true
+dns_domain: atd.lab
 enable_password:
   disabled: true
 ethernet_interfaces:
@@ -239,6 +240,14 @@ router_bgp:
       - 10030:10030
     redistribute_routes:
     - learned
+  - id: 40
+    tenant: S1_FABRIC
+    rd: 10.250.1.5:10040
+    route_targets:
+      both:
+      - 10040:10040
+    redistribute_routes:
+    - learned
   address_family_evpn:
     peer_groups:
     - name: EVPN-OVERLAY-PEERS
@@ -314,6 +323,12 @@ vlan_interfaces:
   vrf: OVERLAY
   ip_address_virtual: 10.30.30.1/24
   tenant: S1_FABRIC
+- name: Vlan40
+  description: forty
+  shutdown: false
+  vrf: OVERLAY
+  ip_address_virtual: 10.40.40.1/24
+  tenant: S1_FABRIC
 - name: Vlan3009
   description: MLAG_L3_VRF_OVERLAY
   shutdown: false
@@ -347,6 +362,9 @@ vlans:
 - id: 30
   name: Thirty
   tenant: S1_FABRIC
+- id: 40
+  name: forty
+  tenant: S1_FABRIC
 - id: 3009
   name: MLAG_L3_VRF_OVERLAY
   trunk_groups:
@@ -372,6 +390,8 @@ vxlan_interface:
         vni: 10020
       - id: 30
         vni: 10030
+      - id: 40
+        vni: 10040
       vrfs:
       - name: OVERLAY
         vni: 10
